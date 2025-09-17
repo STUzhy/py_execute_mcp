@@ -1,0 +1,29 @@
+{
+  "clientId": "b1aec5c4-c5c4-5ec5c4a5c63-8ec5c4a5c6360c8-360c8163",
+  "currentIndex": 0,
+  "tabs": [
+    {
+      "name": "工具",
+      "icon": "icon-tool",
+      "type": "blank",
+      "componentIndex": 2,
+      "storage": {
+        "activeNames": [
+          0
+        ],
+        "autoDetectDiagram": {
+          "edges": [],
+          "views": []
+        },
+        "formData": {
+          "code": "print(\"Hello, World!\")",
+          "context": {},
+          "timeout": 0,
+          "requirements": []
+        },
+        "currentToolName": "python_execute",
+        "lastToolCallResponse": "McpError: MCP error -32602: MCP error -32602: Invalid arguments for tool python_execute: [\n  {\n    \"code\": \"too_small\",\n    \"minimum\": 0,\n    \"type\": \"number\",\n    \"inclusive\": false,\n    \"exact\": false,\n    \"message\": \"Number must be greater than 0\",\n    \"path\": [\n      \"timeout\"\n    ]\n  }\n]"
+      }
+    }
+  ]
+}

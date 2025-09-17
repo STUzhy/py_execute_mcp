@@ -1,0 +1,61 @@
+{
+  "items": [
+    [
+      {
+        "connectionType": "STDIO",
+        "command": "bun",
+        "args": [
+          "E:\\vscodeProj\\py_execute_mcp\\src\\index.ts"
+        ],
+        "url": "",
+        "cwd": "E:/vscodeProj",
+        "oauth": "",
+        "clientName": "openmcp.connect.STDIO",
+        "clientVersion": "0.0.1",
+        "env": {
+          "HOME": "C:\\Users\\zhang",
+          "LOGNAME": "zhang",
+          "PATH": "C:\\Python313\\Scripts\\;C:\\Python313\\;c:\\Users\\zhang\\AppData\\Local\\Programs\\cursor\\resources\\app\\bin;C:\\Program Files\\Google\\Chrome\\Application;C:\\WINDOWS\\system32;C:\\WINDOWS;C:\\WINDOWS\\System32\\Wbem;C:\\WINDOWS\\System32\\WindowsPowerShell\\v1.0\\;C:\\WINDOWS\\System32\\OpenSSH\\;C:\\Users\\zhang\\AppData\\Local\\Microsoft\\WindowsApps;c:\\Users\\zhang\\AppData\\Local\\Programs\\cursor\\resources\\app\\bin;C:\\Program Files\\Tailscale\\;C:\\Program Files\\dotnet\\;C:\\Program Files\\nodejs\\;C:\\ProgramData\\chocolatey\\bin;C:\\Program Files\\GitHub CLI\\;C:\\Program Files\\Git\\cmd;C:\\Program Files\\NVIDIA Corporation\\NVIDIA App\\NvDLISR;C:\\Program Files (x86)\\NVIDIA Corporation\\PhysX\\Common;C:\\Program Files\\Docker\\Docker\\resources\\bin;C:\\Users\\zhang\\.bun\\bin;C:\\Users\\zhang\\.local\\bin;C:\\Users\\zhang\\AppData\\Local\\Microsoft\\WindowsApps;C:\\Users\\zhang\\AppData\\Local\\Programs\\cursor\\resources\\app\\bin;C:\\Users\\zhang\\AppData\\Local\\Programs\\Microsoft VS Code\\bin;C:\\Program Files\\Docker\\Docker\\resources\\bin;C:\\Users\\zhang\\AppData\\Local\\JetBrains\\Toolbox\\scripts;C:\\Users\\zhang\\AppData\\Roaming\\npm;C:\\Users\\zhang\\.lmstudio\\bin;C:\\Users\\zhang\\.bun\\bin",
+          "SHELL": "C:\\WINDOWS\\system32\\cmd.exe",
+          "TERM": "未设置 (Windows 默认终端)",
+          "USER": "zhang"
+        },
+        "serverInfo": {
+          "name": "python-pyodide",
+          "version": "1.0.0"
+        },
+        "name": "python-pyodide",
+        "version": "1.0.0"
+      }
+    ],
+    [
+      {
+        "connectionType": "STDIO",
+        "command": "bun",
+        "args": [
+          "E:\\vscodeProj\\py_execute_mcp\\src\\index.ts"
+        ],
+        "url": "",
+        "cwd": "E:/vscodeProj",
+        "oauth": "",
+        "clientName": "openmcp.connect.STDIO",
+        "clientVersion": "0.0.1",
+        "env": {
+          "HOME": "C:\\Users\\zhang",
+          "LOGNAME": "zhang",
+          "PATH": "C:\\Python313\\Scripts\\;C:\\Python313\\;c:\\Users\\zhang\\AppData\\Local\\Programs\\cursor\\resources\\app\\bin;C:\\Program Files\\Google\\Chrome\\Application;C:\\WINDOWS\\system32;C:\\WINDOWS;C:\\WINDOWS\\System32\\Wbem;C:\\WINDOWS\\System32\\WindowsPowerShell\\v1.0\\;C:\\WINDOWS\\System32\\OpenSSH\\;C:\\Users\\zhang\\AppData\\Local\\Microsoft\\WindowsApps;c:\\Users\\zhang\\AppData\\Local\\Programs\\cursor\\resources\\app\\bin;C:\\Program Files\\Tailscale\\;C:\\Program Files\\dotnet\\;C:\\Program Files\\nodejs\\;C:\\ProgramData\\chocolatey\\bin;C:\\Program Files\\GitHub CLI\\;C:\\Program Files\\Git\\cmd;C:\\Program Files\\NVIDIA Corporation\\NVIDIA App\\NvDLISR;C:\\Program Files (x86)\\NVIDIA Corporation\\PhysX\\Common;C:\\Program Files\\Docker\\Docker\\resources\\bin;C:\\Users\\zhang\\.bun\\bin;C:\\Users\\zhang\\.local\\bin;C:\\Users\\zhang\\AppData\\Local\\Microsoft\\WindowsApps;C:\\Users\\zhang\\AppData\\Local\\Programs\\cursor\\resources\\app\\bin;C:\\Users\\zhang\\AppData\\Local\\Programs\\Microsoft VS Code\\bin;C:\\Program Files\\Docker\\Docker\\resources\\bin;C:\\Users\\zhang\\AppData\\Local\\JetBrains\\Toolbox\\scripts;C:\\Users\\zhang\\AppData\\Roaming\\npm;C:\\Users\\zhang\\.lmstudio\\bin;C:\\Users\\zhang\\.bun\\bin",
+          "SHELL": "C:\\WINDOWS\\system32\\cmd.exe",
+          "TERM": "未设置 (Windows 默认终端)",
+          "USER": "zhang"
+        },
+        "serverInfo": {
+          "name": "python-pyodide",
+          "version": "1.0.0"
+        },
+        "name": "python-pyodide",
+        "version": "1.0.0",
+        "commandString": "bun E:\\vscodeProj\\py_execute_mcp\\src\\index.ts"
+      }
+    ]
+  ]
+}
