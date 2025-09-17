@@ -20,7 +20,23 @@ function resolveIndexURL(): string {
   const envValue = typeof process !== "undefined" ? process.env.PYODIDE_INDEX_URL?.trim() : undefined;
   if (envValue) return envValue;
 
-  // Default to CDN to avoid Node/CJS path issues in hosted env
+  // In Node runtime (Smithery dev/prod), prefer local package files
+  if (typeof process !== "undefined" && process.versions?.node) {
+    try {
+      // Avoid import.meta; resolve relative to CWD where node_modules is installed
+      const path = require("node:path") as typeof import("node:path");
+      const fs = require("node:fs") as typeof import("node:fs");
+      const localDir = path.resolve(process.cwd(), "node_modules", "pyodide");
+      // Validate by checking for a known file present in npm package
+      if (fs.existsSync(path.join(localDir, "pyodide.mjs"))) {
+        return localDir; // Note: local package root (no '/full')
+      }
+    } catch {
+      // fall through to CDN
+    }
+  }
+
+  // Fallback to CDN distribution (which uses '/full/')
   return CDN_FALLBACK;
 }
 
@@ -72,4 +88,3 @@ export async function executePython(req: ExecutionRequest): Promise<ExecutionRes
     return { id: req.id, ok: false, error: String(error?.message ?? error) };
   }
 }
-
