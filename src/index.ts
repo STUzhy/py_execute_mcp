@@ -1,6 +1,7 @@
 import { McpServer } from "@modelcontextprotocol/sdk/server/mcp.js";
 import { z } from "zod";
 import { mergeRequirements } from "./deps";
+import { executePython } from "./pyexec";
 
 interface WorkerPayload {
   id: string;
@@ -77,8 +78,7 @@ class PyWorker {
 
 export default function createServer({ config }: { config?: unknown }) {
   const server = new McpServer({ name: "python-pyodide", version: "1.0.0" });
-  const workerUrl = new URL("./py.worker.ts", import.meta.url);
-  const pyWorker = new PyWorker(workerUrl);
+  // Running in Smithery Node HTTP runtime; avoid Web Workers
 
   server.registerTool(
     "python_execute",
@@ -95,17 +95,15 @@ export default function createServer({ config }: { config?: unknown }) {
     },
     async ({ code, context = {}, timeout, requirements }) => {
       const mergedRequirements = mergeRequirements(code, requirements);
-      const payload: WorkerPayload = {
-        id: crypto.randomUUID(),
-        code,
-        context,
-        requirements: mergedRequirements,
-        timeoutMs: timeout,
-      };
-
-      let response: WorkerResponse;
+      let response: any;
       try {
-        response = await pyWorker.run(payload, timeout);
+        response = await executePython({
+          id: crypto.randomUUID(),
+          code,
+          context,
+          requirements: mergedRequirements,
+          timeoutMs: timeout,
+        });
       } catch (error) {
         return {
           content: [
@@ -152,4 +150,3 @@ export default function createServer({ config }: { config?: unknown }) {
 
   return server;
 }
-
