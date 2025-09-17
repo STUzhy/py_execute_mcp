@@ -1,5 +1,4 @@
-﻿import { McpServer } from "@modelcontextprotocol/sdk/server/mcp.js";
-import { StdioServerTransport } from "@modelcontextprotocol/sdk/server/stdio.js";
+import { McpServer } from "@modelcontextprotocol/sdk/server/mcp.js";
 import { z } from "zod";
 import { mergeRequirements } from "./deps";
 
@@ -76,76 +75,81 @@ class PyWorker {
   }
 }
 
-const server = new McpServer({ name: "python-pyodide", version: "1.0.0" });
-const workerUrl = new URL("./py.worker.ts", import.meta.url);
-const pyWorker = new PyWorker(workerUrl);
+export default function createServer({ config }: { config?: unknown }) {
+  const server = new McpServer({ name: "python-pyodide", version: "1.0.0" });
+  const workerUrl = new URL("./py.worker.ts", import.meta.url);
+  const pyWorker = new PyWorker(workerUrl);
 
-server.registerTool(
-  "python_execute",
-  {
-    title: "Execute Python via Pyodide",
-    description: "Run Python in a Pyodide sandbox with optional PEP 723 requirements.",
-    inputSchema: {
-      code: z.string().describe("Python code to execute"),
-      context: z.record(z.any()).optional(),
-      timeout: z.number().int().positive().default(60_000),
-      requirements: z.array(z.string()).optional(),
+  server.registerTool(
+    "python_execute",
+    {
+      title: "Execute Python via Pyodide",
+      description:
+        "Run Python in a Pyodide sandbox with optional PEP 723 requirements.",
+      inputSchema: {
+        code: z.string().describe("Python code to execute"),
+        context: z.record(z.any()).optional(),
+        timeout: z.number().int().positive().default(60_000),
+        requirements: z.array(z.string()).optional(),
+      },
     },
-  },
-  async ({ code, context = {}, timeout, requirements }) => {
-    const mergedRequirements = mergeRequirements(code, requirements);
-    const payload: WorkerPayload = {
-      id: crypto.randomUUID(),
-      code,
-      context,
-      requirements: mergedRequirements,
-      timeoutMs: timeout,
-    };
+    async ({ code, context = {}, timeout, requirements }) => {
+      const mergedRequirements = mergeRequirements(code, requirements);
+      const payload: WorkerPayload = {
+        id: crypto.randomUUID(),
+        code,
+        context,
+        requirements: mergedRequirements,
+        timeoutMs: timeout,
+      };
 
-    let response: WorkerResponse;
-    try {
-      response = await pyWorker.run(payload, timeout);
-    } catch (error) {
+      let response: WorkerResponse;
+      try {
+        response = await pyWorker.run(payload, timeout);
+      } catch (error) {
+        return {
+          content: [
+            {
+              type: "text",
+              text: `Python execution interrupted: ${String(
+                (error as Error).message ?? error
+              )}`,
+            },
+          ],
+          isError: true,
+        };
+      }
+
+      if (response.ok) {
+        const fragments: string[] = [];
+        if (response.stdout.trim().length > 0) {
+          fragments.push(response.stdout.trimEnd());
+        }
+
+        if (response.result) {
+          fragments.push(`__RESULT__:\n${response.result}`);
+        }
+
+        if (response.stderr.trim().length > 0) {
+          fragments.push(`__STDERR__:\n${response.stderr.trimEnd()}`);
+        }
+
+        return { content: [{ type: "text", text: fragments.join("\n") }] };
+      }
+
+      const errorDetails = response.stderr ? `\n${response.stderr}` : "";
       return {
         content: [
           {
             type: "text",
-            text: `Python execution interrupted: ${String((error as Error).message ?? error)}`,
+            text: `Python execution failed: ${response.error}${errorDetails}`,
           },
         ],
         isError: true,
       };
     }
+  );
 
-    if (response.ok) {
-      const fragments: string[] = [];
-      if (response.stdout.trim().length > 0) {
-        fragments.push(response.stdout.trimEnd());
-      }
+  return server;
+}
 
-      if (response.result) {
-        fragments.push(`__RESULT__:\n${response.result}`);
-      }
-
-      if (response.stderr.trim().length > 0) {
-        fragments.push(`__STDERR__:\n${response.stderr.trimEnd()}`);
-      }
-
-      return { content: [{ type: "text", text: fragments.join("\n") }] };
-    }
-
-    const errorDetails = response.stderr ? `\n${response.stderr}` : "";
-    return {
-      content: [
-        {
-          type: "text",
-          text: `Python execution failed: ${response.error}${errorDetails}`,
-        },
-      ],
-      isError: true,
-    };
-  }
-);
-
-const transport = new StdioServerTransport();
-await server.connect(transport);

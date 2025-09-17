@@ -5,7 +5,9 @@
   "private": true,
   "scripts": {
     "start": "bun run src/index.ts",
-    "dev": "bun run --watch src/index.ts"
+    "bun:dev": "bun run --watch src/index.ts",
+    "dev": "npx @smithery/cli dev",
+    "build": "npx @smithery/cli build"
   },
   "devDependencies": {
     "@types/bun": "latest"
